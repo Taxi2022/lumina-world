@@ -118,8 +118,8 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
   <div class="bottomHead"><div><div class="step"><span class="dot">2</span><span>環境を改善してみよう</span></div><p>ボタンを押すと、同じ状況でも見やすさが変わります。</p></div><div class="compareTitle">改善後の見え方（同じ条件で比較）</div></div>
   <div class="improveGrid">
     <div class="improveCard"><h3>⌁ 照明を改善</h3><small>歩道や横断歩道を明るくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="light">照明を改善する</button></div>
-    <div class="improveCard"><h3>◐ コントラストを改善</h3><small>横断歩道や輪郭のコントラストを高める</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="contrast">コントラストを改善する</button></div>
-    <div class="improveCard"><h3>◉ 標識を改善</h3><small>標識の反射・輪郭・コントラストを強調する</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="sign">標識を改善する</button></div>
+    <div class="improveCard"><h3>◐ 視覚環境を整える</h3><small>光や背景との関係を整え、見つけやすくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="contrast">コントラストを改善する</button></div>
+    <div class="improveCard"><h3>◉ 標識を改善</h3><small>標識だけを見つけやすくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="sign">標識を改善する</button></div>
     <div class="compare"><div class="bigThumb" id="compareScene"></div></div>
   </div>
 </section>
@@ -133,7 +133,8 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
  function render(){
    const v=+vision.value, difficulty=(100-v)/75;
    let blur=difficulty*2.5, contrast=1-difficulty*.43, brightness=1-difficulty*.19, saturate=1-difficulty*.18, g=.06+difficulty*1.35, hz=difficulty*.15;
-   if(state.light){brightness+=.18;g*=.42} if(state.contrast){contrast+=.26;saturate+=.08}
+   if(state.light){brightness+=.18;g*=.42}
+   if(state.contrast){contrast+=.12;brightness+=.06;saturate+=.04;blur*=.94;g*=.88;hz*=.82}
    const visualFilter=`blur(${blur.toFixed(2)}px) contrast(${contrast.toFixed(2)}) brightness(${brightness.toFixed(2)}) saturate(${saturate.toFixed(2)})`;
    scene.style.filter=visualFilter;
    signOverlay.style.filter=visualFilter;
@@ -144,12 +145,12 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
    q.textContent=v>75?'歩行者は、はっきり見えていますか？':v>50?'少し見つけにくくなっていませんか？':'同じ場所でも、見え方は大きく変わります。';
    let cf='brightness(1.04) contrast(1.07)';
    if(state.light) cf+=' brightness(1.12)';
-   if(state.contrast) cf+=' contrast(1.16)';
+   if(state.contrast) cf+=' brightness(1.08) contrast(1.10)';
    compare.style.filter=cf;
    compare.style.backgroundImage=state.sign?"url('lumina_city_scene_sign_improved.png')":"url('lumina_city_scene.png')";
  }
  vision.addEventListener('input',render);
- document.querySelectorAll('.improveCard button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;state[k]=!state[k];b.classList.toggle('active',state[k]);const labels={light:'照明',contrast:'コントラスト',sign:'標識'};b.textContent=state[k]?`${labels[k]}改善 ON`:`${labels[k]}を改善する`;render()}));
+ document.querySelectorAll('.improveCard button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;state[k]=!state[k];b.classList.toggle('active',state[k]);const labels={light:'照明',contrast:'視覚環境',sign:'標識'};b.textContent=state[k]?`${labels[k]}改善 ON`:`${labels[k]}を改善する`;render()}));
  render();
 })();
 </script>
