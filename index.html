@@ -22,7 +22,7 @@ header{display:grid;grid-template-columns:1fr 2.4fr 1fr;gap:18px;align-items:cen
 .top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;gap:16px;padding:16px}
 .panel,.mainScene,.bottom{border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,28,43,.94),rgba(7,18,29,.95));box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);border-radius:13px}
 .panel{padding:18px}.step{display:flex;gap:10px;align-items:center;font-size:17px;font-weight:800}.dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--gold2);color:#121212;font-weight:900;flex:0 0 auto}.panel p{font-size:14px;line-height:1.8;color:#d0d5da}.scaleBox{margin-top:18px;background:rgba(255,255,255,.045);padding:14px;border-radius:7px}.scaleTitle{font-size:13px;color:#dce1e6;margin-bottom:13px}.scale{position:relative;padding-left:28px}.scale:before{content:"";position:absolute;left:9px;top:7px;bottom:8px;width:2px;background:linear-gradient(var(--green),var(--gold2),#ff9936,var(--red))}.level{position:relative;margin:0 0 18px;font-size:12px;color:#cdd3d9}.level:before{content:"";position:absolute;width:15px;height:15px;border-radius:50%;left:-26px;top:0;background:currentColor;box-shadow:0 0 10px currentColor}.level b{display:block;color:#fff;font-size:13px;margin-bottom:2px}.l1{color:var(--green)}.l2{color:#f7d14f}.l3{color:#ff9b32}.l4{color:var(--red)}
-.mainScene{position:relative;overflow:hidden;min-height:420px}.sceneWrap{position:absolute;inset:0;overflow:hidden}.sceneSvg{position:absolute;inset:0;width:100%;height:100%;display:block}.sceneImage{transition:filter .14s linear}.glareGroup{opacity:.06;transition:opacity .14s linear;mix-blend-mode:screen}.glareHalo{animation:glarePulse 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.hazeRect{fill:#d3d6cd;opacity:0;transition:opacity .14s linear}.signOverlay{opacity:0;transition:opacity .18s ease;filter:brightness(1.65) contrast(1.35) saturate(1.28)}.signOutline{opacity:0;transition:opacity .18s ease;fill:none;stroke:#f5fbff;stroke-width:7;stroke-linejoin:round;filter:url(#signGlow)}.vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 140px rgba(0,0,0,.42)}
+.mainScene{position:relative;overflow:hidden;min-height:420px}.sceneWrap{position:absolute;inset:0;overflow:hidden}.sceneSvg{position:absolute;inset:0;width:100%;height:100%;display:block}.sceneImage{transition:filter .14s linear}.glareGroup{opacity:.06;transition:opacity .14s linear;mix-blend-mode:screen}.glareHalo{animation:glarePulse 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}.hazeRect{fill:#d3d6cd;opacity:0;transition:opacity .14s linear}.signOverlay{opacity:0;transition:opacity .18s ease;filter:brightness(1.18) contrast(1.10) saturate(1.08)}.signOutline{opacity:0;transition:opacity .18s ease;fill:none;stroke:#f5fbff;stroke-width:4;stroke-linejoin:round;filter:url(#signGlow)}.vignette{position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 140px rgba(0,0,0,.42)}
 @keyframes glarePulse{0%,100%{filter:brightness(.85)}50%{filter:brightness(1.2)}}
 .question{position:absolute;left:18px;top:16px;background:rgba(1,8,14,.68);backdrop-filter:blur(8px);padding:9px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.14);font-weight:800}
 .sliderZone{padding:10px 18px 16px;background:#09141f;border-top:1px solid var(--line)}.visionValue{text-align:center;font-size:13px;margin-bottom:6px}.sliderRow{display:grid;grid-template-columns:120px 1fr 120px;align-items:center;gap:12px}.sideLbl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}.sideLbl.right{justify-content:flex-end}.eye{font-size:23px}.good{color:#a8df6b}.bad{color:#ff554c}.rangeWrap{position:relative}.rangeTrack{height:8px;border-radius:9px;background:linear-gradient(90deg,#8dd55b,#f1c649,#ff9b33,#f05b44);position:absolute;left:0;right:0;top:50%;transform:translateY(-50%)}input[type=range]{width:100%;position:relative;z-index:2;appearance:none;background:transparent}input[type=range]::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.7);cursor:pointer}.hint{text-align:center;color:#87929e;font-size:11px;margin-top:5px}
@@ -74,11 +74,11 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
             <stop offset="100%" stop-color="#ffe38a" stop-opacity="0"/>
           </radialGradient>
           <filter id="signGlow" x="-80%" y="-80%" width="260%" height="260%">
-            <feGaussianBlur stdDeviation="6" result="blur"/>
+            <feGaussianBlur stdDeviation="2.2" result="blur"/>
             <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
           </filter>
           <clipPath id="signClip">
-            <path d="M212 118 L292 268 L132 268 Z"/>
+            <rect x="96" y="98" width="176" height="205" rx="16" ry="16"/>
           </clipPath>
         </defs>
         <image id="sceneImage" class="sceneImage" href="lumina_city_scene.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none"/>
@@ -95,7 +95,7 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
         </g>
         <!-- Sign improvement: only the road sign is enhanced, not the whole scene -->
         <image id="signOverlay" class="signOverlay" href="lumina_city_scene.png" x="0" y="0" width="1672" height="941" preserveAspectRatio="none" clip-path="url(#signClip)"/>
-        <path id="signOutline" class="signOutline" d="M212 118 L292 268 L132 268 Z"/>
+        <rect id="signOutline" class="signOutline" x="96" y="98" width="176" height="205" rx="16" ry="16"/>
       </svg>
       <div class="vignette"></div>
       <div class="question" id="question">歩行者は、はっきり見えていますか？</div>
@@ -127,7 +127,7 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
   <div class="improveGrid">
     <div class="improveCard"><h3>⌁ 照明を改善</h3><small>歩道や横断歩道を明るくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="light">照明を改善する</button></div>
     <div class="improveCard"><h3>◐ コントラストを改善</h3><small>横断歩道や輪郭のコントラストを高める</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="contrast">コントラストを改善する</button></div>
-    <div class="improveCard"><h3>◉ 標識を改善</h3><small>標識面の輝度・反射性・輪郭コントラストを高める</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="sign">標識を改善する</button></div>
+    <div class="improveCard"><h3>◉ 標識を改善</h3><small>標識を背景から少し見つけやすくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="sign">標識を改善する</button></div>
     <div class="compare"><div class="bigThumb" id="compareScene"></div></div>
   </div>
 </section>
@@ -143,7 +143,7 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
    let blur=difficulty*2.5, contrast=1-difficulty*.43, brightness=1-difficulty*.19, saturate=1-difficulty*.18, g=.06+difficulty*1.35, hz=difficulty*.15;
    if(state.light){brightness+=.18;g*=.42} if(state.contrast){contrast+=.26;saturate+=.08}
    scene.style.filter=`blur(${blur.toFixed(2)}px) contrast(${contrast.toFixed(2)}) brightness(${brightness.toFixed(2)}) saturate(${saturate.toFixed(2)})`;
-   haze.style.opacity=Math.min(.26,hz*1.65).toFixed(3); glare.style.opacity=Math.min(1,g).toFixed(2); signOverlay.style.opacity=state.sign?'0.92':'0'; signOutline.style.opacity=state.sign?'0.72':'0'; txt.textContent=v;
+   haze.style.opacity=Math.min(.26,hz*1.65).toFixed(3); glare.style.opacity=Math.min(1,g).toFixed(2); signOverlay.style.opacity=state.sign?'0.46':'0'; signOutline.style.opacity=state.sign?'0.24':'0'; txt.textContent=v;
    q.textContent=v>75?'歩行者は、はっきり見えていますか？':v>50?'少し見つけにくくなっていませんか？':'同じ場所でも、見え方は大きく変わります。';
    let cf='brightness(1.04) contrast(1.07)'; if(state.light) cf+=' brightness(1.12)'; if(state.contrast) cf+=' contrast(1.16)'; compare.style.filter=cf;
  }
