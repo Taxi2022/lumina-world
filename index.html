@@ -134,10 +134,19 @@ footer{display:grid;grid-template-columns:1fr;align-items:center;gap:18px;paddin
    const v=+vision.value, difficulty=(100-v)/75;
    let blur=difficulty*2.5, contrast=1-difficulty*.43, brightness=1-difficulty*.19, saturate=1-difficulty*.18, g=.06+difficulty*1.35, hz=difficulty*.15;
    if(state.light){brightness+=.18;g*=.42} if(state.contrast){contrast+=.26;saturate+=.08}
-   scene.style.filter=`blur(${blur.toFixed(2)}px) contrast(${contrast.toFixed(2)}) brightness(${brightness.toFixed(2)}) saturate(${saturate.toFixed(2)})`;
-   haze.style.opacity=Math.min(.26,hz*1.65).toFixed(3); glare.style.opacity=Math.min(1,g).toFixed(2); signOverlay.style.opacity=state.sign?'1':'0'; txt.textContent=v;
+   const visualFilter=`blur(${blur.toFixed(2)}px) contrast(${contrast.toFixed(2)}) brightness(${brightness.toFixed(2)}) saturate(${saturate.toFixed(2)})`;
+   scene.style.filter=visualFilter;
+   signOverlay.style.filter=visualFilter;
+   haze.style.opacity=Math.min(.26,hz*1.65).toFixed(3);
+   glare.style.opacity=Math.min(1,g).toFixed(2);
+   signOverlay.style.opacity=state.sign?'1':'0';
+   txt.textContent=v;
    q.textContent=v>75?'歩行者は、はっきり見えていますか？':v>50?'少し見つけにくくなっていませんか？':'同じ場所でも、見え方は大きく変わります。';
-   let cf='brightness(1.04) contrast(1.07)'; if(state.light) cf+=' brightness(1.12)'; if(state.contrast) cf+=' contrast(1.16)'; compare.style.filter=cf;
+   let cf='brightness(1.04) contrast(1.07)';
+   if(state.light) cf+=' brightness(1.12)';
+   if(state.contrast) cf+=' contrast(1.16)';
+   compare.style.filter=cf;
+   compare.style.backgroundImage=state.sign?"url('lumina_city_scene_sign_improved.png')":"url('lumina_city_scene.png')";
  }
  vision.addEventListener('input',render);
  document.querySelectorAll('.improveCard button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;state[k]=!state[k];b.classList.toggle('active',state[k]);const labels={light:'照明',contrast:'コントラスト',sign:'標識'};b.textContent=state[k]?`${labels[k]}改善 ON`:`${labels[k]}を改善する`;render()}));
