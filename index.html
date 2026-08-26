@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lumina World | Lumina City #1</title>
+<style>
+:root{
+  --bg:#07111b; --bg2:#091724; --panel:#0b1723; --panel2:#0d1c2b;
+  --line:rgba(195,211,228,.20); --text:#f6f3ec; --muted:#b9c0c7;
+  --gold:#f0ad32; --gold2:#ffc44f; --green:#8dcc59; --red:#ff5147;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:#030a11;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif}
+body{min-height:100vh;padding:16px}
+.app{max-width:1440px;margin:auto;background:radial-gradient(circle at 50% -20%,#15304a 0,#081521 42%,#06101a 100%);border:1px solid rgba(255,255,255,.08);box-shadow:0 28px 90px rgba(0,0,0,.48);overflow:hidden}
+header{display:grid;grid-template-columns:1fr 2.4fr 1fr;gap:18px;align-items:center;padding:20px 24px;border-bottom:1px solid var(--line)}
+.brand{font-size:31px;font-weight:800;letter-spacing:-.03em;white-space:nowrap}.brand span{color:var(--gold2)}
+.brand small{display:block;color:#fff;font-size:13px;letter-spacing:.02em;font-weight:600;margin-top:3px}
+.title{text-align:center}.title h1{font-size:clamp(24px,3vw,37px);margin:0 0 6px;letter-spacing:.03em}.title p{margin:0;color:#d9dde2;font-size:16px}
+.badge{justify-self:end;border:1px solid rgba(255,255,255,.35);border-radius:8px;padding:10px 18px;text-align:center;color:#dfe5ea}.badge b{display:block;color:#fff;font-size:16px;margin-top:3px}
+.top{display:grid;grid-template-columns:260px minmax(0,1fr) 260px;gap:16px;padding:16px}
+.panel,.mainScene,.bottom{border:1px solid var(--line);background:linear-gradient(180deg,rgba(13,28,43,.94),rgba(7,18,29,.95));box-shadow:inset 0 0 0 1px rgba(255,255,255,.015);border-radius:13px}
+.panel{padding:18px}.step{display:flex;gap:10px;align-items:center;font-size:17px;font-weight:800}.dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--gold2);color:#121212;font-weight:900;flex:0 0 auto}.panel p{font-size:14px;line-height:1.8;color:#d0d5da}.scaleBox{margin-top:18px;background:rgba(255,255,255,.045);padding:14px;border-radius:7px}.scaleTitle{font-size:13px;color:#dce1e6;margin-bottom:13px}.scale{position:relative;padding-left:28px}.scale:before{content:"";position:absolute;left:9px;top:7px;bottom:8px;width:2px;background:linear-gradient(var(--green),var(--gold2),#ff9936,var(--red))}.level{position:relative;margin:0 0 18px;font-size:12px;color:#cdd3d9}.level:before{content:"";position:absolute;width:15px;height:15px;border-radius:50%;left:-26px;top:0;background:currentColor;box-shadow:0 0 10px currentColor}.level b{display:block;color:#fff;font-size:13px;margin-bottom:2px}.l1{color:var(--green)}.l2{color:#f7d14f}.l3{color:#ff9b32}.l4{color:var(--red)}
+.mainScene{position:relative;overflow:hidden;min-height:420px}.sceneWrap{position:absolute;inset:0;overflow:hidden}.sceneImage{position:absolute;inset:0;background-image:url('lumina_city_scene.png');background-size:cover;background-position:center;transition:filter .14s linear}.haze,.glare,.vignette{position:absolute;inset:0;pointer-events:none}.haze{background:rgba(205,208,197,0);transition:background .14s linear}.glare{opacity:.1;transition:opacity .14s linear}.gl{position:absolute;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen;animation:glarePulse 2.6s ease-in-out infinite}.g1{left:35.8%;top:61.8%;width:11%;height:11%;background:radial-gradient(circle,rgba(255,252,225,.95) 0,rgba(255,242,190,.42) 16%,rgba(255,232,150,.14) 34%,rgba(255,224,130,0) 62%)}.g2{left:70.4%;top:62.7%;width:15%;height:15%;background:radial-gradient(circle,rgba(255,252,225,.97) 0,rgba(255,242,188,.44) 15%,rgba(255,232,150,.16) 34%,rgba(255,224,130,0) 62%)}.g3{left:77.6%;top:62.4%;width:12%;height:12%;background:radial-gradient(circle,rgba(255,252,225,.94) 0,rgba(255,240,184,.40) 16%,rgba(255,232,150,.14) 34%,rgba(255,224,130,0) 62%)}.vignette{box-shadow:inset 0 0 140px rgba(0,0,0,.42)}
+@keyframes glarePulse{0%,100%{filter:brightness(.85)}50%{filter:brightness(1.2)}}
+.question{position:absolute;left:18px;top:16px;background:rgba(1,8,14,.68);backdrop-filter:blur(8px);padding:9px 13px;border-radius:8px;border:1px solid rgba(255,255,255,.14);font-weight:800}
+.sliderZone{padding:10px 18px 16px;background:#09141f;border-top:1px solid var(--line)}.visionValue{text-align:center;font-size:13px;margin-bottom:6px}.sliderRow{display:grid;grid-template-columns:120px 1fr 120px;align-items:center;gap:12px}.sideLbl{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800}.sideLbl.right{justify-content:flex-end}.eye{font-size:23px}.good{color:#a8df6b}.bad{color:#ff554c}.rangeWrap{position:relative}.rangeTrack{height:8px;border-radius:9px;background:linear-gradient(90deg,#8dd55b,#f1c649,#ff9b33,#f05b44);position:absolute;left:0;right:0;top:50%;transform:translateY(-50%)}input[type=range]{width:100%;position:relative;z-index:2;appearance:none;background:transparent}input[type=range]::-webkit-slider-thumb{appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.7);cursor:pointer}.hint{text-align:center;color:#87929e;font-size:11px;margin-top:5px}
+.infoTitle{font-weight:900;font-size:16px;margin-bottom:16px}.cause{display:grid;grid-template-columns:48px 1fr;gap:10px;margin-bottom:21px}.ico{width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;display:grid;place-items:center;font-size:21px}.cause b{font-size:14px}.cause p{margin:4px 0 0;font-size:12px;line-height:1.65;color:#c5ccd2}.callout{margin-top:18px;border:1px solid rgba(255,255,255,.22);padding:13px;border-radius:8px;font-size:13px;line-height:1.65}.callout strong{color:var(--gold2)}
+.bottom{margin:0 16px 16px;padding:18px}.bottomHead{display:flex;justify-content:space-between;gap:15px;align-items:flex-end;margin-bottom:14px}.bottomHead p{margin:3px 0 0;color:#c9d0d6;font-size:13px}.compareTitle{color:var(--gold2);font-weight:800;font-size:14px}.improveGrid{display:grid;grid-template-columns:repeat(3,1fr) 1.25fr;gap:10px}.improveCard,.compare{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:12px}.improveCard h3{margin:0 0 6px;font-size:14px}.improveCard small{display:block;color:#aeb6be;min-height:35px;line-height:1.5}.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}.thumb{aspect-ratio:16/9;background-image:url('lumina_city_scene.png');background-size:cover;background-position:center;border-radius:4px;position:relative;overflow:hidden}.thumb.before{filter:brightness(.68) contrast(.72) blur(.6px)}.thumb.after{filter:brightness(1.08) contrast(1.1)}.thumb:after{position:absolute;left:5px;bottom:4px;padding:2px 5px;font-size:9px;background:rgba(0,0,0,.65);border-radius:2px}.before:after{content:"改善前"}.after:after{content:"改善後"}.improveCard button{width:100%;border:1px solid var(--gold);background:transparent;color:var(--gold2);border-radius:7px;padding:9px;font-weight:800;cursor:pointer;transition:.18s}.improveCard button:hover,.improveCard button.active{background:var(--gold2);color:#111}.compare{padding:8px}.compare .bigThumb{height:100%;min-height:170px;background-image:url('lumina_city_scene.png');background-size:cover;background-position:center;border-radius:5px;filter:brightness(1.04) contrast(1.07);transition:filter .2s}
+footer{display:grid;grid-template-columns:1fr auto;align-items:center;gap:18px;padding:13px 22px 16px;border-top:1px solid var(--line);background:#06101a}.tagline{font-size:22px;font-weight:900;color:var(--gold2)}.tagline span{display:block;font-size:13px;font-weight:500;color:#d0d7de;margin-top:3px}.next{border:1px solid rgba(255,255,255,.4);padding:10px 18px;border-radius:6px;font-size:13px}.note{grid-column:1/-1;color:#7f8993;font-size:10px;line-height:1.5}
+@media(max-width:1080px){.top{grid-template-columns:220px minmax(0,1fr)}.top>.panel:last-child{grid-column:1/-1}.infoFlex{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cause{margin:0}.callout{grid-column:1/-1}.improveGrid{grid-template-columns:repeat(3,1fr)}.compare{grid-column:1/-1}.compare .bigThumb{min-height:300px}}
+@media(max-width:760px){body{padding:0}.app{border:0}.top{grid-template-columns:1fr}.top>.panel:last-child{grid-column:auto}.mainScene{min-height:360px}header{grid-template-columns:1fr}.title{text-align:left}.badge{justify-self:start}.sliderRow{grid-template-columns:1fr}.sideLbl.right{justify-content:flex-start}.infoFlex,.improveGrid{grid-template-columns:1fr}.compare{grid-column:auto}.bottomHead{display:block}.compareTitle{margin-top:10px}footer{grid-template-columns:1fr}.brand{font-size:28px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand">Lumina <span>World</span><small>Make the world easier to see.</small></div>
+  <div class="title"><h1>あなたが見ている世界は、本当に同じ？</h1><p>見やすい世界を創るために、見えにくい世界を体験しよう。</p></div>
+  <div class="badge">Lumina City #1<b>薄暮の横断歩道</b></div>
+</header>
+
+<section class="top">
+  <aside class="panel">
+    <div class="step"><span class="dot">1</span><span>この人、見えますか？</span></div>
+    <p>スライダーを動かして、同じ場面でも「見え方」がどう変わるか体験してください。</p>
+    <div class="scaleBox">
+      <div class="scaleTitle">見え方の変化（教育用疑似体験）</div>
+      <div class="scale">
+        <div class="level l1"><b>正常な見え方</b>Vision 100%</div>
+        <div class="level l2"><b>コントラスト低下</b>Vision 75%</div>
+        <div class="level l3"><b>グレア増加</b>Vision 50%</div>
+        <div class="level l4"><b>より見えにくい状態</b>Vision 25–40%</div>
+      </div>
+    </div>
+  </aside>
+
+  <div class="mainScene">
+    <div class="sceneWrap">
+      <div class="sceneImage" id="sceneImage"></div>
+      <div class="haze" id="haze"></div><div class="glare" id="glare"><span class="gl g1"></span><span class="gl g2"></span><span class="gl g3"></span></div><div class="vignette"></div>
+      <div class="question" id="question">歩行者は、はっきり見えていますか？</div>
+    </div>
+    <div class="sliderZone">
+      <div class="visionValue">Vision <span id="visionText">60</span>%</div>
+      <div class="sliderRow">
+        <div class="sideLbl good"><span class="eye">◉</span><span>見えやすい<br>Vision 100%</span></div>
+        <div class="rangeWrap"><div class="rangeTrack"></div><input id="vision" type="range" min="25" max="100" value="60"></div>
+        <div class="sideLbl right bad"><span class="eye">◉̸</span><span>見えにくい<br>Vision 25–40%</span></div>
+      </div>
+      <div class="hint">スライダーを動かすと、画像の見え方が変化します。</div>
+    </div>
+  </div>
+
+  <aside class="panel">
+    <div class="infoTitle">なぜ見えにくくなるの？</div>
+    <div class="infoFlex">
+      <div class="cause"><div class="ico">☼</div><div><b>グレア（まぶしさ）</b><p>対向車のライトや濡れた路面の反射が、対象の視認を妨げます。</p></div></div>
+      <div class="cause"><div class="ico">◐</div><div><b>コントラスト低下</b><p>人や標識が背景に埋もれ、発見しにくくなります。</p></div></div>
+      <div class="cause"><div class="ico">◎</div><div><b>ぼけ・かすみ</b><p>輪郭がはっきりしないほど、対象の識別が難しくなります。</p></div></div>
+      <div class="callout">見えにくさは眼だけで決まりません。<br><strong>環境側を変えることでも、視認性は改善できます。</strong></div>
+    </div>
+  </aside>
+</section>
+
+<section class="bottom">
+  <div class="bottomHead"><div><div class="step"><span class="dot">2</span><span>環境を改善してみよう</span></div><p>ボタンを押すと、同じ状況でも見やすさが変わります。</p></div><div class="compareTitle">改善後の見え方（同じ条件で比較）</div></div>
+  <div class="improveGrid">
+    <div class="improveCard"><h3>⌁ 照明を改善</h3><small>歩道や横断歩道を明るくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="light">照明を改善する</button></div>
+    <div class="improveCard"><h3>◐ コントラストを改善</h3><small>横断歩道や輪郭のコントラストを高める</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="contrast">コントラストを改善する</button></div>
+    <div class="improveCard"><h3>◉ 標識を改善</h3><small>標識や情報を見つけやすくする</small><div class="thumbs"><div class="thumb before"></div><div class="thumb after"></div></div><button data-key="sign">標識を改善する</button></div>
+    <div class="compare"><div class="bigThumb" id="compareScene"></div></div>
+  </div>
+</section>
+
+<footer><div class="tagline">“見やすい世界は、設計できる。”<span>Seeing is not only an ability. It is also a design problem.</span></div><div class="note">※このコンテンツは「見えにくさ」を通じて気づきを生むための教育用疑似体験です。特定の疾患の見え方を医学的に完全再現するものではありません。</div></footer>
+</div>
+<script>
+(() => {
+ const vision=document.getElementById('vision'), scene=document.getElementById('sceneImage'), haze=document.getElementById('haze'), glare=document.getElementById('glare'), txt=document.getElementById('visionText'), q=document.getElementById('question'), compare=document.getElementById('compareScene');
+ const state={light:false,contrast:false,sign:false};
+ function render(){
+   const v=+vision.value, difficulty=(100-v)/75;
+   let blur=difficulty*2.5, contrast=1-difficulty*.43, brightness=1-difficulty*.19, saturate=1-difficulty*.18, g=.12+difficulty*.72, hz=difficulty*.13;
+   if(state.light){brightness+=.18;g*=.55} if(state.contrast){contrast+=.26;saturate+=.08} if(state.sign){contrast+=.05}
+   scene.style.filter=`blur(${blur.toFixed(2)}px) contrast(${contrast.toFixed(2)}) brightness(${brightness.toFixed(2)}) saturate(${saturate.toFixed(2)})`;
+   haze.style.background=`rgba(211,214,205,${hz.toFixed(3)})`; glare.style.opacity=Math.min(1,g).toFixed(2); txt.textContent=v;
+   q.textContent=v>75?'歩行者は、はっきり見えていますか？':v>50?'少し見つけにくくなっていませんか？':'同じ場所でも、見え方は大きく変わります。';
+   let cf='brightness(1.04) contrast(1.07)'; if(state.light) cf+=' brightness(1.12)'; if(state.contrast) cf+=' contrast(1.16)'; if(state.sign) cf+=' saturate(1.08)'; compare.style.filter=cf;
+ }
+ vision.addEventListener('input',render);
+ document.querySelectorAll('.improveCard button').forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.key;state[k]=!state[k];b.classList.toggle('active',state[k]);const labels={light:'照明',contrast:'コントラスト',sign:'標識'};b.textContent=state[k]?`${labels[k]}改善 ON`:`${labels[k]}を改善する`;render()}));
+ render();
+})();
+</script>
+</body></html>
